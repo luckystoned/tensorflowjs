@@ -7,17 +7,20 @@ let { features, labels, testFeatures, testLabels } = loadCSV('cars.csv', {
     
     shuffle: true,
     splitTest: 50,
-    dataColumns: ['horsepower'],
+    dataColumns: ['horsepower', 'weight', 'displacement'],
     labelColumns: ['mpg']
 })
 
 const regression = new linearRegression(features, labels, { 
 
-    learningRate: 0.0001,
-    iteration: 100 
+    learningRate: 0.00001,
+    iteration: 1000
 })
 
 
 regression.train()
 
-console.log('m: ', regression.m, 'b: ', regression.b)
+const r2 = regression.test(testFeatures, testLabels)
+
+console.log('r2: ', r2)
+
