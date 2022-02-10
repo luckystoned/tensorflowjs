@@ -18,6 +18,7 @@ class linearRegression {
 
     gradientDescent() {
         
+
         const currentGuess = this.features.matMul(this.weights)
         const differences = currentGuess.sub(this.labels)
 
@@ -32,12 +33,32 @@ class linearRegression {
 
     train() {
 
+       const batchQuantity = Math.floor(
+
+           this.features.shape[0] / this.options.batchSize
+        )
+
         for(let i = 0; i < this.options.iteration; i++) {
-            console.log('learning rate: ', this.options.learningRate)
+
+            for(let j = 0; j < batchQuantity; j++) {
+
+                const startIndex = j * this.options.batchSize
+                const { batchSize } = this.options
+
+                const featureSlice = this.features.slice([startIndex, 0], [batchSize, -1])
+                const labelSlice = this.labels.slice([startIndex, 0], [batchSize, -1])
+
+                this.gradientDescent(featureSlice, labelSlice)
+            }
+
             this.gradientDescent()
             this.recordMSE()
             this.updateLearningRate()
         }
+    }
+
+    predict(observations) {
+        return this.processFeatures(observations).matMul(this.weights)
     }
 
     test(testFeatures, testLabels) {

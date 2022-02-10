@@ -14,7 +14,8 @@ let { features, labels, testFeatures, testLabels } = loadCSV('cars.csv', {
 const regression = new linearRegression(features, labels, { 
 
     learningRate: 0.00001,
-    iteration: 1000
+    iteration: 1000,
+    batchSize: 50
 })
 
 
@@ -24,3 +25,8 @@ const r2 = regression.test(testFeatures, testLabels)
 
 console.log('r2: ', r2)
 
+const predict = regression.predict([
+    [120, 2, 380]
+])
+
+console.log('predict: ', predict)
