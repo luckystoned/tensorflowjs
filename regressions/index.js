@@ -2,6 +2,7 @@ require('@tensorflow/tfjs')
 const tf = require('@tensorflow/tfjs')
 const loadCSV = require('./load-csv')
 const linearRegression = require('./linear-regression')
+const plot = require('node-remote-plot');
 
 let { features, labels, testFeatures, testLabels } = loadCSV('cars.csv', {
     
@@ -11,22 +12,22 @@ let { features, labels, testFeatures, testLabels } = loadCSV('cars.csv', {
     labelColumns: ['mpg']
 })
 
-const regression = new linearRegression(features, labels, { 
-
-    learningRate: 0.00001,
-    iteration: 1000,
-    batchSize: 50
-})
-
-
-regression.train()
-
-const r2 = regression.test(testFeatures, testLabels)
-
-console.log('r2: ', r2)
-
-const predict = regression.predict([
-    [120, 2, 380]
-])
-
-console.log('predict: ', predict)
+const regression = new linearRegression(features, labels, {
+    learningRate: 0.1,
+    iterations: 3,
+    batchSize: 10
+  });
+  
+  regression.train();
+  const r2 = regression.test(testFeatures, testLabels);
+  
+  plot({
+    x: regression.mseHistory.reverse(),
+    xLabel: 'Iteration #',
+    yLabel: 'Mean Squared Error'
+  });
+  
+  console.log('R2 is', r2);
+  
+  regression.predict([[120, 2, 380]]).print();
+  
