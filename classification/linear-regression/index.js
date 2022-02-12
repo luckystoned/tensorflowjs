@@ -1,10 +1,10 @@
-require('@tensorflow/tfjs-node');
+require('@tensorflow/tfjs');
 const tf = require('@tensorflow/tfjs');
-const loadCSV = require('./load-csv');
+const loadCSV = require('../load-csv');
 const LinearRegression = require('./linear-regression');
 const plot = require('node-remote-plot');
 
-let { features, labels, testFeatures, testLabels } = loadCSV('./cars.csv', {
+let { features, labels, testFeatures, testLabels } = loadCSV('../data/cars.csv', {
   shuffle: true,
   splitTest: 50,
   dataColumns: ['horsepower', 'weight', 'displacement'],
@@ -12,8 +12,8 @@ let { features, labels, testFeatures, testLabels } = loadCSV('./cars.csv', {
 });
 
 const regression = new LinearRegression(features, labels, {
-  learningRate: 0.1,
-  iterations: 3,
+  learningRate: 0.000001,
+  iterations: 10,
   batchSize: 10
 });
 

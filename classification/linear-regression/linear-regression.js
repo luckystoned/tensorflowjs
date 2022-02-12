@@ -1,4 +1,4 @@
-const tf = require('@tensorflow/tfjs');
+const tf = require('@tensorflow/tfjs')
 const _ = require('lodash');
 
 class LinearRegression {
@@ -65,12 +65,12 @@ class LinearRegression {
       .sub(predictions)
       .pow(2)
       .sum()
-      .get();
+      .arraySync()
     const tot = testLabels
       .sub(testLabels.mean())
       .pow(2)
       .sum()
-      .get();
+      .arraySync()
 
     return 1 - res / tot;
   }
@@ -104,7 +104,7 @@ class LinearRegression {
       .pow(2)
       .sum()
       .div(this.features.shape[0])
-      .get();
+      .arraySync()
 
     this.mseHistory.unshift(mse);
   }
