@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+            
+    <title> Modelo Regresion </title>
+
+    <!-- Importar TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js"></script>
+    <!-- Importar tfjs-vis  Visualizacion-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+ 
+</head>
+
+<body>
+    JSON File
+    <input 
+        type="file"
+        id="upload-json"
+    >
+    <br>
+    Binary File
+    <input 
+        type="file"
+        id="upload-weigths"
+    >
+    <br>
+    <input 
+        type="button"
+        value="Cargar Modelo"
+        onclick="cargarModelo()"
+    >
+    <br>
+    <input 
+        type="button"
+        value="Detener Entrenamiento"
+        onclick="stopTraining=true;"
+    >
+    <br>
+    <input 
+        type="button"
+        value="Guardar Modelo"
+        onclick="guardarModelo()"
+    >
+
+    <br>
+    <input 
+        type="button"
+        value="Curva de inferencia"
+        onclick="verCurvaInferencia()"
+    >
+    <!-- Importar el archivo principal -->
+    <script src="script.js"></script>
+</body>
+</html>
