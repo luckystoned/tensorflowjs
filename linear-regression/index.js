@@ -25,6 +25,30 @@ function denormalise(tensor, min, max) {
   return denormalisedTensor;
 }
 
+function createModel() {
+  const model = tf.sequential();
+
+  // Add a single hidden layer
+  model.add(
+    tf.layers.dense({
+      units: 1,
+      useBias: true,
+      activation: "linear",
+      inputDim: 1,
+    })
+  );
+
+  // Add an output layer
+  model.add(
+    tf.layers.dense({
+      units: 1,
+      useBias: true,
+    })
+  );
+
+  return model;
+}
+
 async function run() {
   // Import the dataset
   const housesSalesDataset = tf.data.csv(
@@ -66,7 +90,17 @@ async function run() {
     2
   );
 
-  trainingFeatureTensor.print(true);
+  const model = createModel();
+  //Model Summary
+  tfvis.show.modelSummary({ name: "Model Summary" }, model);
+  const layer = model.getLayer(undefined, 0);
+  tfvis.show.layer({ name: "Layer 1" }, layer);
+
+  const optimizer = tf.train.sgd(0.1);
+  model.compile({
+    loss: tf.losses.meanSquaredError,
+    optimizer: optimizer,
+  });
 }
 
 run();
